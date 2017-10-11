@@ -1,3 +1,6 @@
+package application;
+
+import application.lab.Zveno;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -9,13 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import lab.MyCircle;
-import lab.MyRectangle;
-import view.LabController;
+import application.lab.MyCircle;
+import application.lab.MyRectangle;
+import application.view.LabController;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class Main extends Application {
@@ -29,8 +31,9 @@ public class Main extends Application {
     private MyRectangle rect;
     private MyCircle circle;
 
-    private boolean isAlive = false;
+    public boolean isAlive = false;
 
+    private ArrayList<Zveno> arr;
 
 
     @Override
@@ -63,12 +66,15 @@ public class Main extends Application {
 
 
             labController = loader.getController();
-            labController.draw(10,10);
-            labController.draw(20);
+            labController.setMainApp(this);
 
 
-            rect = new MyRectangle(0, 20, 0.5f, labController.getGC());
-            circle = new MyCircle(0, 20, 0.5f, labController.getGC());
+            rect = new MyRectangle(0, 20, 0.5f, labController.getGC(LabController.TAB_RECT));
+            circle = new MyCircle(0, 20, 0.5f, labController.getGC(LabController.TAB_CIRCLE));
+
+            arr = new ArrayList<>(2);
+            arr.add(rect);
+            arr.add(circle);
 
             setup();
             startScheduledExecutorService(10);
@@ -79,68 +85,37 @@ public class Main extends Application {
     }
 
     private void setup(){
-        labController.startBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!isAlive) {
-                    isAlive = true;
-                    labController.startBtn.setText("reset");
-                    labController.setDisabledParamsPane(true);
-                    labController.pauseBtn.setDisable(false);
-                } else {
-                    isAlive = false;
-                    labController.startBtn.setText("start");
-                    labController.setDisabledParamsPane(false);
-                    labController.pauseBtn.setDisable(true);
-                    labController.pauseBtn.setText("pause");
-                }
-
-            }
-        });
-
-        labController.pauseBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (isAlive) {
-                    isAlive = false;
-                    labController.pauseBtn.setText("continue");
-                } else {
-                    isAlive = true;
-                    labController.pauseBtn.setText("pause");
-                }
-            }
-        });
-
-        labController.tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                if (isAlive) {
-                    isAlive = false;
-                    labController.pauseBtn.setText("continue");
-                }
-            }
-        });
 
     }
 
 
     private void update(){
         if(isAlive) {
-            if (labController.getIdCurrentTab() == TAB_RECT){
-                rect.move(true);
-            } else {
-                circle.move(true);
-            }
+//            if (labController.getIdCurrentTab() == TAB_RECT){
+//                rect.move(true);
+//            } else {
+//                circle.move(true);
+//            }
+          arr.get(labController.getIdCurrentTab()).move(true);
         }
     }
 
     private void draw(){
         labController.clearGC();
-        if (labController.getIdCurrentTab() == TAB_RECT){
-            rect.draw();
-        } else {
-            circle.draw();
-        }
+//        if (labController.getIdCurrentTab() == TAB_RECT){
+//            rect.draw();
+//        } else {
+//            circle.draw();
+//        }
+        arr.get(labController.getIdCurrentTab()).draw();
+    }
+
+    public void resetZveno(){
+//        if () {
+//
+//        }
+
+        arr.get(labController.getIdCurrentTab()).reset();
     }
 
 

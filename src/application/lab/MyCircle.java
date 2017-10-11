@@ -1,4 +1,4 @@
-package lab;
+package application.lab;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -21,6 +21,6 @@ public class MyCircle extends Zveno{
 
     @Override
     public void move(boolean forward) {
-
+        position = position.add(velocity, 0);
     }
 }

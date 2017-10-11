@@ -1,4 +1,4 @@
-package lab;
+package application.lab;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Created by user on 11.10.17.
  */
-abstract class Zveno {
+public abstract class Zveno {
     Point2D position;
     float velocity;
     GraphicsContext gc;
@@ -25,7 +25,11 @@ abstract class Zveno {
         this.gc = gc;
     }
 
-    abstract void draw();
-    abstract void move(boolean forward);
+    public void reset(){
+        this.position = new Point2D(0, position.getY());
+    }
+
+    public abstract void draw();
+    public abstract void move(boolean forward);
 
 }

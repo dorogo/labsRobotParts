@@ -16,17 +16,17 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LabController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.LabController">
    <children>
       <TabPane fx:id="tabPane" layoutX="-1.0" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="rectangle">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1115.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="755.0" prefWidth="1280.0">
                      <children>
                         <Pane layoutX="21.0" layoutY="129.0" prefHeight="417.0" prefWidth="773.0" style="-fx-background-color: white; -fx-border-color: lightgrey;">
                            <children>
-                              <Canvas fx:id="canvasTest" height="418.0" width="772.0" />
+                              <Canvas fx:id="canvasRect" height="418.0" width="772.0" />
                            </children></Pane>
                         <FlowPane layoutX="21.0" layoutY="14.0" prefHeight="101.0" prefWidth="773.0" style="-fx-border-color: lightgrey;">
                            <children>
@@ -59,7 +59,7 @@
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField accessibleText="1234567890" onKeyTyped="#onKeyTypedIntOnly" prefHeight="27.0" prefWidth="40.0" text="100" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="endTxt" accessibleText="1234567890" onKeyTyped="#onKeyTypedIntOnly" prefHeight="27.0" prefWidth="40.0" text="100" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </GridPane.margin>
@@ -122,12 +122,12 @@
                                           <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
+                                          <Button fx:id="startBtnR" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button fx:id="pauseBtn" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button fx:id="pauseBtnR" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -136,9 +136,6 @@
                                     </GridPane>
                                  </children>
                               </VBox>
-                              <Button fx:id="testBtn" mnemonicParsing="false" text="Button" />
-                              <Button fx:id="test2Btn" mnemonicParsing="false" text="Button" />
-                              <Button fx:id="t3b" mnemonicParsing="false" text="Button" />
                            </children>
                         </FlowPane>
                      </children></AnchorPane>
@@ -150,7 +147,7 @@
                      <children>
                         <Pane layoutX="21.0" layoutY="129.0" prefHeight="417.0" prefWidth="773.0" style="-fx-background-color: white; -fx-border-color: lightgrey;">
                            <children>
-                              <Canvas fx:id="canvasTest" height="418.0" width="772.0" />
+                              <Canvas fx:id="canvasCircle" height="418.0" width="772.0" />
                            </children>
                         </Pane>
                         <FlowPane layoutX="21.0" layoutY="14.0" prefHeight="101.0" prefWidth="773.0" style="-fx-border-color: lightgrey;">
@@ -247,12 +244,12 @@
                                           <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
+                                          <Button fx:id="startBtnC" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button fx:id="pauseBtn" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button fx:id="pauseBtnC" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -261,9 +258,6 @@
                                     </GridPane>
                                  </children>
                               </VBox>
-                              <Button fx:id="testBtn1" mnemonicParsing="false" text="Button" />
-                              <Button fx:id="test2Btn1" mnemonicParsing="false" text="Button" />
-                              <Button fx:id="t3b1" mnemonicParsing="false" text="Button" />
                            </children>
                         </FlowPane>
                      </children></AnchorPane>
