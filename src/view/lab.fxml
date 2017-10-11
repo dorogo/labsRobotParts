@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LabController">
+   <children>
+      <TabPane fx:id="tabPane" layoutX="-1.0" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="rectangle">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1115.0">
+                     <children>
+                        <Pane layoutX="21.0" layoutY="129.0" prefHeight="417.0" prefWidth="773.0" style="-fx-background-color: white; -fx-border-color: lightgrey;">
+                           <children>
+                              <Canvas fx:id="canvasTest" height="418.0" width="772.0" />
+                           </children></Pane>
+                        <FlowPane layoutX="21.0" layoutY="14.0" prefHeight="101.0" prefWidth="773.0" style="-fx-border-color: lightgrey;">
+                           <children>
+                              <HBox fx:id="paramsPane">
+                                 <children>
+                                    <VBox prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <Label text="Position">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <GridPane prefHeight="63.0" prefWidth="132.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="59.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="61.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Start X">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <TextField fx:id="startTxt" minHeight="0.0" minWidth="0.0" onKeyTyped="#onKeyTypedIntOnly" prefHeight="22.0" prefWidth="41.0" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField accessibleText="1234567890" onKeyTyped="#onKeyTypedIntOnly" prefHeight="27.0" prefWidth="40.0" text="100" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <Label text="End X" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <Label text="Velocity">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <GridPane prefHeight="63.0" prefWidth="106.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="31.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="89.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="v =">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <TextField accessibleText="1234567890" minHeight="0.0" minWidth="0.0" onKeyTyped="#onKeyTypedIntOnly" prefHeight="22.0" prefWidth="41.0" text="0" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="131.0" layoutY="11.0" prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                 <children>
+                                    <Label text="Control">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <GridPane prefHeight="63.0" prefWidth="106.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="31.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="89.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="pauseBtn" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="testBtn" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="test2Btn" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="t3b" mnemonicParsing="false" text="Button" />
+                           </children>
+                        </FlowPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="circle">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="21.0" layoutY="129.0" prefHeight="417.0" prefWidth="773.0" style="-fx-background-color: white; -fx-border-color: lightgrey;">
+                           <children>
+                              <Canvas fx:id="canvasTest" height="418.0" width="772.0" />
+                           </children>
+                        </Pane>
+                        <FlowPane layoutX="21.0" layoutY="14.0" prefHeight="101.0" prefWidth="773.0" style="-fx-border-color: lightgrey;">
+                           <children>
+                              <HBox fx:id="paramsPane1">
+                                 <children>
+                                    <VBox prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <Label text="Position">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <GridPane prefHeight="63.0" prefWidth="132.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="59.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="61.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Start X">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <TextField fx:id="startTxt1" minHeight="0.0" minWidth="0.0" onKeyTyped="#onKeyTypedIntOnly" prefHeight="22.0" prefWidth="41.0" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField accessibleText="1234567890" onKeyTyped="#onKeyTypedIntOnly" prefHeight="27.0" prefWidth="40.0" text="100" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <Label text="End X" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                       <children>
+                                          <Label text="Velocity">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <GridPane prefHeight="63.0" prefWidth="106.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="31.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="89.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="v =">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <TextField accessibleText="1234567890" minHeight="0.0" minWidth="0.0" onKeyTyped="#onKeyTypedIntOnly" prefHeight="22.0" prefWidth="41.0" text="0" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="131.0" layoutY="11.0" prefHeight="103.0" prefWidth="120.0" style="-fx-border-color: lightgrey;">
+                                 <children>
+                                    <Label text="Control">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <GridPane prefHeight="63.0" prefWidth="106.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="31.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="89.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button fx:id="startBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="start" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="pauseBtn" disable="true" layoutX="45.0" layoutY="12.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="167.0" text="pause" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="testBtn1" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="test2Btn1" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="t3b1" mnemonicParsing="false" text="Button" />
+                           </children>
+                        </FlowPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
