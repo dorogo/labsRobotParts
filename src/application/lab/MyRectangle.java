@@ -1,5 +1,6 @@
 package application.lab;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -8,20 +9,32 @@ import javafx.scene.paint.Color;
  */
 public class MyRectangle extends Zveno{
 
-    public MyRectangle(float x, float y, float velocity, GraphicsContext gc) {
-        super(x, y, velocity, gc);
-    }
 
+    public static final float DEFAULT_Y = 60;
+
+    public MyRectangle(float x, float y, float startParam, float endParam, float velocity, double width, double height, GraphicsContext gc) {
+        super(x, y, startParam, endParam, velocity, width, height, gc);
+    }
 
     @Override
     public void draw() {
         gc.setFill(Color.GREEN);
-        gc.fillRect(position.getX(), position.getY(), 30, 30);
+        gc.fillRect(position.getX(), position.getY(), width, height);
+    }
+
+    private int moveRatio = 1;
+    @Override
+    public void move() {
+        if (distance >= param.getY() && moveRatio == 1 || distance <= param.getX() && moveRatio == -1) {
+            moveRatio *= -1;
+        }
+        distance += moveRatio * velocity;
+        position = position.add(moveRatio * velocity, 0);
+//                else position = position.subtract(velocity, 0);
     }
 
     @Override
-    public void move(boolean forward) {
-        if (forward) position = position.add(velocity, 0);
-                else position = position.subtract(velocity, 0);
+    public void reset() {
+        this.position = new Point2D(0, position.getY());
     }
 }

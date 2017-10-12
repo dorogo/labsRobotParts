@@ -8,28 +8,44 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class Zveno {
     Point2D position;
+    Point2D param;
+    double width;
+    double height;
     float velocity;
+    float distance;
     GraphicsContext gc;
 
 
     /**
      *
-     * @param x
-     * @param y
-     * @param velocity - px/ms
+     * @param x - start
+     * @param y - end
+     * @param velocity
+     * @param width
+     * @param height
      * @param gc
      */
-    Zveno (float x, float y, float velocity, GraphicsContext gc) {
+    Zveno (float x, float y, float startParam, float endParam, float velocity, double width, double height, GraphicsContext gc) {
         this.position = new Point2D(x, y);
+        this.param = new Point2D(startParam, endParam);
         this.velocity = velocity;
         this.gc = gc;
+        this.width = width;
+        this.height = height;
+        distance = startParam;
     }
 
-    public void reset(){
-        this.position = new Point2D(0, position.getY());
+    public void reloadParams (float startParam, float endParam, float velocity, double width, double height) {
+//        this.position = new Point2D(x, y);
+        this.param = new Point2D(startParam, endParam);
+        this.velocity = velocity;
+        this.width = width;
+        this.height = height;
+        distance = startParam;
     }
 
     public abstract void draw();
-    public abstract void move(boolean forward);
+    public abstract void move();
+    public abstract void reset();
 
 }

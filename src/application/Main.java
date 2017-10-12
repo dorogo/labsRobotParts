@@ -69,12 +69,6 @@ public class Main extends Application {
             labController.setMainApp(this);
 
 
-            rect = new MyRectangle(0, 20, 0.5f, labController.getGC(LabController.TAB_RECT));
-            circle = new MyCircle(0, 20, 0.5f, labController.getGC(LabController.TAB_CIRCLE));
-
-            arr = new ArrayList<>(2);
-            arr.add(rect);
-            arr.add(circle);
 
             setup();
             startScheduledExecutorService(10);
@@ -85,6 +79,42 @@ public class Main extends Application {
     }
 
     private void setup(){
+        //TODO сделать апдейт фигуры по кнопке старт
+        rect = new MyRectangle(labController.getStart(), MyRectangle.DEFAULT_Y,labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY(), labController.getGC(LabController.TAB_RECT));
+        int i = LabController.TAB_CIRCLE;
+        circle = new MyCircle(MyCircle.DEFAULT_X, MyCircle.DEFAULT_Y,labController.getStart(i), labController.getEnd(i), labController.getVelocity(i), labController.getSize(i).getX(), labController.getSize(i).getY(), labController.getGC(LabController.TAB_CIRCLE));
+
+        arr = new ArrayList<>(2);
+        arr.add(rect);
+        arr.add(circle);
+
+
+        labController.refreshBtnR.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                rect.reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
+            }
+        });
+        labController.refreshBtnC.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                circle.reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
+            }
+        });
+
+        labController.tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                if (isAlive) {
+                    isAlive = false;
+                    if (labController.getIdCurrentTab() == TAB_RECT) {
+                        labController.pauseBtnC.setText("continue");
+                    } else {
+                        labController.pauseBtnR.setText("continue");
+                    }
+                }
+            }
+        });
 
     }
 
@@ -96,7 +126,7 @@ public class Main extends Application {
 //            } else {
 //                circle.move(true);
 //            }
-          arr.get(labController.getIdCurrentTab()).move(true);
+          arr.get(labController.getIdCurrentTab()).move();
         }
     }
 
@@ -111,11 +141,11 @@ public class Main extends Application {
     }
 
     public void resetZveno(){
-//        if () {
-//
-//        }
-
         arr.get(labController.getIdCurrentTab()).reset();
+    }
+
+    public void reloadParamsZveno(){
+        arr.get(labController.getIdCurrentTab()).reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
     }
 
 
