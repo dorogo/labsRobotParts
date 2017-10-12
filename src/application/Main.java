@@ -22,6 +22,7 @@ import java.util.concurrent.*;
 
 public class Main extends Application {
 
+    public static final int PERIOD_IN_MS = 10;
     private static final int TAB_RECT = 0;
     private static final int TAB_CIRCLE = 1;
 
@@ -30,7 +31,6 @@ public class Main extends Application {
     private LabController labController;
     private MyRectangle rect;
     private MyCircle circle;
-
     public boolean isAlive = false;
 
     private ArrayList<Zveno> arr;
@@ -71,15 +71,13 @@ public class Main extends Application {
 
 
             setup();
-            startScheduledExecutorService(10);
-
+            startScheduledExecutorService(PERIOD_IN_MS);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void setup(){
-        //TODO сделать апдейт фигуры по кнопке старт
         rect = new MyRectangle(labController.getStart(), MyRectangle.DEFAULT_Y,labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY(), labController.getGC(LabController.TAB_RECT));
         int i = LabController.TAB_CIRCLE;
         circle = new MyCircle(MyCircle.DEFAULT_X, MyCircle.DEFAULT_Y,labController.getStart(i), labController.getEnd(i), labController.getVelocity(i), labController.getSize(i).getX(), labController.getSize(i).getY(), labController.getGC(LabController.TAB_CIRCLE));
@@ -87,20 +85,6 @@ public class Main extends Application {
         arr = new ArrayList<>(2);
         arr.add(rect);
         arr.add(circle);
-
-
-        labController.refreshBtnR.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                rect.reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
-            }
-        });
-        labController.refreshBtnC.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                circle.reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
-            }
-        });
 
         labController.tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
@@ -121,22 +105,12 @@ public class Main extends Application {
 
     private void update(){
         if(isAlive) {
-//            if (labController.getIdCurrentTab() == TAB_RECT){
-//                rect.move(true);
-//            } else {
-//                circle.move(true);
-//            }
           arr.get(labController.getIdCurrentTab()).move();
         }
     }
 
     private void draw(){
         labController.clearGC();
-//        if (labController.getIdCurrentTab() == TAB_RECT){
-//            rect.draw();
-//        } else {
-//            circle.draw();
-//        }
         arr.get(labController.getIdCurrentTab()).draw();
     }
 

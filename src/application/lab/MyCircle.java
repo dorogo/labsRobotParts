@@ -1,5 +1,6 @@
 package application.lab;
 
+import application.Main;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,12 +20,11 @@ public class MyCircle extends Zveno{
     private float angle;
 
     public MyCircle(float x, float y, float startParam, float endParam, float velocity, double width, double height, GraphicsContext gc) {
-        super(x, y, startParam, endParam, velocity, width, height, gc);
+        super(x, y, startParam, endParam, velocity/ ( 1000 / Main.PERIOD_IN_MS), width, height, gc);
         this.radius = width / 2;
         this.lineStart = new Point2D(position.getX() + radius, position.getY() + radius);
         this.lineEnd = new Point2D(lineStart.getX(), lineStart.getY() - radius);
         this.angle = 0;
-        this.velocity = (float) (velocity * Math.PI / 180.0f);
     }
 
     @Override
@@ -40,29 +40,32 @@ public class MyCircle extends Zveno{
         if (distance >= param.getY() && moveRatio == 1 || distance <= param.getX() && moveRatio == -1) {
             moveRatio *= -1;
         }
-        distance +=  angle * 180 / Math.PI;
-        angle = moveRatio * velocity/100;
-        rx = lineEnd.getX() - lineStart.getX();
-        ry = lineEnd.getY() - lineStart.getY();
-        c = Math.cos(angle);
-        s = Math.sin(angle);
-        lineEnd = new Point2D(lineStart.getX() + rx * c - ry * s, lineStart.getY() + rx * s + ry * c);
+        angle = moveRatio * velocity;
+        distance += angle;
+        this.lineEnd = getPointByAngle(angle, lineStart, lineEnd);
     }
 
-    private double rx, ry, x0, x, y0,y, x1,y1, c, s;
+    private Point2D getPointByAngle(double a, Point2D center, Point2D end){
+        double rx, ry, c, s;
+        a = a * Math.PI / 180.0f;
+        rx = end.getX() - center.getX();
+        ry = end.getY() - center.getY();
+        c = Math.cos(a);
+        s = Math.sin(a);
+        return new Point2D(center.getX() + rx * c - ry * s, center.getY() + rx * s + ry * c);
+    }
 
     @Override
     public void reloadParams(float x, float y, float velocity, double width, double height) {
-        super.reloadParams(x, y, velocity, width, height);
+        super.reloadParams(x, y, velocity/ ( 1000 / Main.PERIOD_IN_MS), width, height);
         this.radius = width / 2;
         this.lineStart = new Point2D(position.getX() + radius, position.getY() + radius);
-        this.lineEnd = new Point2D(lineStart.getX(), lineStart.getY() - radius);
+        this.lineEnd = getPointByAngle((float) param.getX(), lineStart, new Point2D(lineStart.getX(), lineStart.getY() - radius));
         this.angle = 0;
-        this.velocity = (float) (velocity * Math.PI / 180.0f);
     }
 
     @Override
     public void reset() {
-        lineEnd = new Point2D(lineStart.getX(), lineStart.getY() - radius);
+        this.lineEnd = getPointByAngle((float) param.getX(), lineStart, new Point2D(lineStart.getX(), lineStart.getY() - radius));
     }
 }

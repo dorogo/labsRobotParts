@@ -21,7 +21,10 @@ public class LabController implements Initializable {
 
     public static final int TAB_RECT = 0;
     public static final int TAB_CIRCLE = 1;
+    private static final int MAX_AVAILABLE_END_DEGREE = 350;
     private Main mainApp;
+    private int maxAvailableEndX;
+
 
     @FXML
     private TextField startTxtR;
@@ -44,14 +47,6 @@ public class LabController implements Initializable {
     private TextField velocityTxtR;
     @FXML
     private TextField velocityTxtC;
-
-
-
-
-    @FXML
-    public Button refreshBtnR;
-    @FXML
-    public Button refreshBtnC;
 
     @FXML
     private Canvas canvasRect;
@@ -79,28 +74,97 @@ public class LabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        maxAvailableEndX = (int)(canvasRect.getWidth() - Integer.parseInt(widthTxtR.getText()));
+
+        ChangeListener<Boolean> cl = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    mainApp.reloadParamsZveno();
+                    maxAvailableEndX = (int)(canvasRect.getWidth() - Integer.parseInt(widthTxtR.getText()));
+                }
+            }
+        };
+        startTxtR.focusedProperty().addListener(cl);
+        startTxtC.focusedProperty().addListener(cl);
+        endTxtR.focusedProperty().addListener(cl);
+        endTxtC.focusedProperty().addListener(cl);
+        widthTxtR.focusedProperty().addListener(cl);
+        heightTxtR.focusedProperty().addListener(cl);
+        radiusTxtC.focusedProperty().addListener(cl);
+        velocityTxtR.focusedProperty().addListener(cl);
+        velocityTxtC.focusedProperty().addListener(cl);
+
+        //check the correctness of the entered data
 
         startTxtR.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    System.out.println("Textfield on focus");
-                } else if (!startTxtR.getText().isEmpty()) {
-                    if (Integer.parseInt(startTxtR.getText()) >= Integer.parseInt(endTxtR.getText())) {
-                        startTxtR.setText("0");
-                    } else if (Integer.parseInt(startTxtR.getText()) > 150) {
-                        startTxtR.setText("150");
+                if (!newValue) {
+                    if (Integer.parseInt(startTxtR.getText()) > maxAvailableEndX) {
+                        startTxtR.setText(String.valueOf(maxAvailableEndX));
                     }
+                    if (Integer.parseInt(startTxtR.getText()) >= Integer.parseInt(endTxtR.getText())) {
+                        startTxtR.setText(String.valueOf(Integer.parseInt(endTxtR.getText()) - 1));
+                    }
+                    mainApp.reloadParamsZveno();
                 }
             }
         });
+        endTxtR.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    if (Integer.parseInt(endTxtR.getText()) <= Integer.parseInt(startTxtR.getText())) {
+                        endTxtR.setText(String.valueOf(Integer.parseInt(startTxtR.getText()) + 1));
+                    }
+                    if (Integer.parseInt(endTxtR.getText()) > maxAvailableEndX) {
+                        endTxtR.setText(String.valueOf(maxAvailableEndX));
+                    }
+                    mainApp.reloadParamsZveno();
+                }
+            }
+        });
+
+        startTxtC.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    if (Integer.parseInt(startTxtC.getText()) > maxAvailableEndX) {
+                        startTxtC.setText(String.valueOf(maxAvailableEndX));
+                    }
+                    if (Integer.parseInt(startTxtC.getText()) >= Integer.parseInt(endTxtC.getText())) {
+                        startTxtC.setText(String.valueOf(Integer.parseInt(endTxtC.getText()) - 1));
+                    }
+                    mainApp.reloadParamsZveno();
+                }
+            }
+        });
+        endTxtC.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    if (Integer.parseInt(endTxtC.getText()) <= Integer.parseInt(startTxtC.getText())) {
+                        endTxtC.setText(String.valueOf(Integer.parseInt(startTxtC.getText()) + 1));
+                    }
+                    if (Integer.parseInt(endTxtC.getText()) > MAX_AVAILABLE_END_DEGREE) {
+                        endTxtC.setText(String.valueOf(MAX_AVAILABLE_END_DEGREE));
+                    }
+                    mainApp.reloadParamsZveno();
+                }
+            }
+        });
+
+
+
+
 
         startBtnR.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (!mainApp.isAlive && pauseBtnR.isDisable()) {
                     mainApp.isAlive = true;
-                    startBtnR.setText("reset");
+                    startBtnR.setText("stop");
                     setDisabledParamsPane(true);
                     pauseBtnR.setDisable(false);
                     mainApp.reloadParamsZveno();
@@ -134,7 +198,7 @@ public class LabController implements Initializable {
             public void handle(ActionEvent event) {
                 if (!mainApp.isAlive && pauseBtnC.isDisable()) {
                     mainApp.isAlive = true;
-                    startBtnC.setText("reset");
+                    startBtnC.setText("stop");
                     setDisabledParamsPane(true);
                     pauseBtnC.setDisable(false);
                     mainApp.reloadParamsZveno();
@@ -161,33 +225,6 @@ public class LabController implements Initializable {
                 }
             }
         });
-
-
-//        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-//                if (mainApp.isAlive) {
-//                    mainApp.isAlive = false;
-//                    if (getIdCurrentTab() == TAB_RECT) {
-//                        pauseBtnC.setText("continue");
-//                    } else {
-//                        pauseBtnR.setText("continue");
-//                    }
-//                }
-//            }
-//        });
-
-
-
-
-        
-        
-        
-//        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-//            }
-//        });
 
     }
 
