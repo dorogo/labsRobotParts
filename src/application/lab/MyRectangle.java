@@ -5,6 +5,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by user on 11.10.17.
  */
@@ -37,10 +39,16 @@ public class MyRectangle extends Zveno{
     @Override
     public void reloadParams(float startParam, float endParam, float velocity, double width, double height) {
         super.reloadParams(startParam, endParam, velocity / ( 1000 / Main.PERIOD_IN_MS) , width, height);
+        this.position = new Point2D(startParam, DEFAULT_Y);
     }
 
     @Override
     public void reset() {
         this.position = new Point2D(param.getX(), DEFAULT_Y);
+    }
+
+    @Override
+    public float getCurrentPosition() {
+        return (float) position.getX();
     }
 }

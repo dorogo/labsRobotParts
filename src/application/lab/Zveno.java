@@ -14,6 +14,7 @@ public abstract class Zveno {
     float velocity;
     float distance;
     GraphicsContext gc;
+    private float acceleration;
 
 
     /**
@@ -47,5 +48,10 @@ public abstract class Zveno {
     public abstract void draw();
     public abstract void move();
     public abstract void reset();
+    public abstract float getCurrentPosition();
+
+    public float getAcceleration() {
+        return acceleration;
+    }
 
 }

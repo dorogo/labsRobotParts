@@ -6,10 +6,13 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import application.lab.MyCircle;
@@ -64,7 +67,6 @@ public class Main extends Application {
             primaryStage.setOnCloseRequest(event -> System.exit(0));
 
 
-
             labController = loader.getController();
             labController.setMainApp(this);
 
@@ -100,18 +102,27 @@ public class Main extends Application {
             }
         });
 
+//        primaryStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                if (event.getCode() == KeyCode.ENTER) {
+//                    reloadParamsZveno();
+//                }
+//            }
+//        });
+
     }
 
 
     private void update(){
-        if(isAlive) {
-          arr.get(labController.getIdCurrentTab()).move();
-        }
+        if(isAlive) arr.get(labController.getIdCurrentTab()).move();
     }
 
     private void draw(){
         labController.clearGC();
         arr.get(labController.getIdCurrentTab()).draw();
+        labController.displayAcceleration(arr.get(labController.getIdCurrentTab()).getAcceleration());
+        labController.displayCurrentPosition(arr.get(labController.getIdCurrentTab()).getCurrentPosition());
     }
 
     public void resetZveno(){

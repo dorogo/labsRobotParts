@@ -68,4 +68,9 @@ public class MyCircle extends Zveno{
     public void reset() {
         this.lineEnd = getPointByAngle((float) param.getX(), lineStart, new Point2D(lineStart.getX(), lineStart.getY() - radius));
     }
+
+    @Override
+    public float getCurrentPosition() {
+        return (float) lineStart.angle(new Point2D(lineStart.getX(), lineStart.getY() - radius), lineEnd);
+    }
 }

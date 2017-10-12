@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class LabController implements Initializable {
@@ -47,6 +48,16 @@ public class LabController implements Initializable {
     private TextField velocityTxtR;
     @FXML
     private TextField velocityTxtC;
+
+    @FXML
+    private TextField accelerationTxtR;
+    @FXML
+    private TextField accelerationTxtC;
+
+    @FXML
+    private TextField currPosTxtR;
+    @FXML
+    private TextField currPosTxtC;
 
     @FXML
     private Canvas canvasRect;
@@ -286,6 +297,22 @@ public class LabController implements Initializable {
         }
     }
 
+    public void displayAcceleration(float i) {
+        if (getIdCurrentTab() == TAB_RECT) {
+            accelerationTxtR.setText(new DecimalFormat("#.#").format(i));
+        } else {
+            accelerationTxtC.setText(new DecimalFormat("#.#").format(i));
+        }
+    }
+
+    public void displayCurrentPosition(float i) {
+        if (getIdCurrentTab() == TAB_RECT) {
+            currPosTxtR.setText(new DecimalFormat("#.#").format(i));
+        } else {
+            currPosTxtC.setText(new DecimalFormat("#.#").format(i));
+        }
+    }
+
     public Point2D getSize(){
         return getSize(getIdCurrentTab());
     }
@@ -309,4 +336,5 @@ public class LabController implements Initializable {
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
+
 }
