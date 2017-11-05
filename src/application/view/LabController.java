@@ -141,8 +141,8 @@ public class LabController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    if (Integer.parseInt(startTxtC.getText()) > maxAvailableEndX) {
-                        startTxtC.setText(String.valueOf(maxAvailableEndX));
+                    if (Integer.parseInt(startTxtC.getText()) > MAX_AVAILABLE_END_DEGREE) {
+                        startTxtC.setText(String.valueOf(MAX_AVAILABLE_END_DEGREE));
                     }
                     if (Integer.parseInt(startTxtC.getText()) >= Integer.parseInt(endTxtC.getText())) {
                         startTxtC.setText(String.valueOf(Integer.parseInt(endTxtC.getText()) - 1));

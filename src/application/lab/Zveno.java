@@ -15,6 +15,8 @@ public abstract class Zveno {
     float distance;
     GraphicsContext gc;
     private float acceleration;
+    int moveRatio = 1;
+    int moveCount = 0;
 
 
     /**
@@ -43,10 +45,16 @@ public abstract class Zveno {
         this.width = width;
         this.height = height;
         distance = startParam;
+        moveCount = 0;
     }
 
     public abstract void draw();
-    public abstract void move();
+    public void move() {
+        if (distance <= param.getX() && moveRatio == -1) moveCount++;
+        if (distance >= param.getY() && moveRatio == 1 || distance <= param.getX() && moveRatio == -1) {
+            moveRatio *= -1;
+        }
+    }
     public abstract void reset();
     public abstract float getCurrentPosition();
 

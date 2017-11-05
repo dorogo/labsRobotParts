@@ -26,14 +26,13 @@ public class MyRectangle extends Zveno{
         gc.fillRect(position.getX(), position.getY(), width, height);
     }
 
-    private int moveRatio = 1;
     @Override
     public void move() {
-        if (distance >= param.getY() && moveRatio == 1 || distance <= param.getX() && moveRatio == -1) {
-            moveRatio *= -1;
+        super.move();
+        if (moveCount < 1) {
+            distance += moveRatio * velocity;
+            position = position.add(moveRatio * velocity, 0);
         }
-        distance += moveRatio * velocity;
-        position = position.add(moveRatio * velocity, 0);
     }
 
     @Override

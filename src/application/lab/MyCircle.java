@@ -34,15 +34,14 @@ public class MyCircle extends Zveno{
         gc.strokeLine(lineStart.getX(), lineStart.getY(), lineEnd.getX(), lineEnd.getY());
     }
 
-    private int moveRatio = 1;
     @Override
     public void move() {
-        if (distance >= param.getY() && moveRatio == 1 || distance <= param.getX() && moveRatio == -1) {
-            moveRatio *= -1;
+        super.move();
+        if (moveCount < 1) {
+            angle = moveRatio * velocity;
+            distance += angle;
+            this.lineEnd = getPointByAngle(angle, lineStart, lineEnd);
         }
-        angle = moveRatio * velocity;
-        distance += angle;
-        this.lineEnd = getPointByAngle(angle, lineStart, lineEnd);
     }
 
     private Point2D getPointByAngle(double a, Point2D center, Point2D end){
