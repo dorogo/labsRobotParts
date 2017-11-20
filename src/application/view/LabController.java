@@ -6,14 +6,22 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -25,6 +33,7 @@ public class LabController implements Initializable {
     private static final int MAX_AVAILABLE_END_DEGREE = 350;
     private Main mainApp;
     private int maxAvailableEndX;
+    private LabController currentWindow;
 
 
     @FXML
@@ -60,6 +69,11 @@ public class LabController implements Initializable {
     private TextField currPosTxtC;
 
     @FXML
+    private TextField currVelTxtR;
+    @FXML
+    private TextField currVelTxtC;
+
+    @FXML
     private Canvas canvasRect;
     @FXML
     private Canvas canvasCircle;
@@ -82,9 +96,15 @@ public class LabController implements Initializable {
     @FXML
     public TabPane tabPane;
 
+    @FXML
+    private Button parametersBtnR;
+    @FXML
+    private Button parametersBtnC;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        currentWindow = this;
         maxAvailableEndX = (int)(canvasRect.getWidth() - Integer.parseInt(widthTxtR.getText()));
 
         ChangeListener<Boolean> cl = new ChangeListener<Boolean>() {
@@ -237,6 +257,29 @@ public class LabController implements Initializable {
             }
         });
 
+        EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try{
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("parameters.fxml"));
+                    Parent root1 = (Parent) fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setTitle("parameters");
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+                    ParametersController pc = fxmlLoader.getController();
+                    pc.setParentWindow(currentWindow);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        parametersBtnR.setOnAction(eh);
+        parametersBtnC.setOnAction(eh);
+
     }
 
     public int getIdCurrentTab() {
@@ -313,6 +356,14 @@ public class LabController implements Initializable {
         }
     }
 
+    public void displayCurrentVelocity(float i) {
+        if (getIdCurrentTab() == TAB_RECT) {
+            currVelTxtR.setText(new DecimalFormat("#.#").format(i));
+        } else {
+            currVelTxtC.setText(new DecimalFormat("#.#").format(i));
+        }
+    }
+
     public Point2D getSize(){
         return getSize(getIdCurrentTab());
     }
@@ -333,8 +384,15 @@ public class LabController implements Initializable {
 
     }
 
+    public void setMoveMode(int mode){
+        mainApp.reloadMoveModelZveno(mode);
+    }
+
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
 
+    public int getCurrentMoveModeID(){
+        return mainApp.getCurrenMoveModeId();
+    }
 }

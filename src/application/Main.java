@@ -40,7 +40,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Lab");
 
@@ -71,7 +71,6 @@ public class Main extends Application {
             labController.setMainApp(this);
 
 
-
             setup();
             startScheduledExecutorService(PERIOD_IN_MS);
         } catch (IOException e) {
@@ -79,10 +78,10 @@ public class Main extends Application {
         }
     }
 
-    private void setup(){
-        rect = new MyRectangle(labController.getStart(), MyRectangle.DEFAULT_Y,labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY(), labController.getGC(LabController.TAB_RECT));
+    private void setup() {
+        rect = new MyRectangle(labController.getStart(), MyRectangle.DEFAULT_Y, labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY(), labController.getGC(LabController.TAB_RECT));
         int i = LabController.TAB_CIRCLE;
-        circle = new MyCircle(MyCircle.DEFAULT_X, MyCircle.DEFAULT_Y,labController.getStart(i), labController.getEnd(i), labController.getVelocity(i), labController.getSize(i).getX(), labController.getSize(i).getY(), labController.getGC(LabController.TAB_CIRCLE));
+        circle = new MyCircle(MyCircle.DEFAULT_X, MyCircle.DEFAULT_Y, labController.getStart(i), labController.getEnd(i), labController.getVelocity(i), labController.getSize(i).getX(), labController.getSize(i).getY(), labController.getGC(LabController.TAB_CIRCLE));
 
         arr = new ArrayList<>(2);
         arr.add(rect);
@@ -114,39 +113,50 @@ public class Main extends Application {
     }
 
 
-    private void update(){
-        if(isAlive) arr.get(labController.getIdCurrentTab()).move();
+    private void update(long period) {
+        if (isAlive && arr.get(labController.getIdCurrentTab()).canMove())
+            arr.get(labController.getIdCurrentTab()).move(period);
     }
 
-    private void draw(){
+    private void draw() {
         labController.clearGC();
         arr.get(labController.getIdCurrentTab()).draw();
         labController.displayAcceleration(arr.get(labController.getIdCurrentTab()).getAcceleration());
         labController.displayCurrentPosition(arr.get(labController.getIdCurrentTab()).getCurrentPosition());
+        labController.displayCurrentVelocity(arr.get(labController.getIdCurrentTab()).getVelocity());
     }
 
-    public void resetZveno(){
+    public void resetZveno() {
         arr.get(labController.getIdCurrentTab()).reset();
     }
 
-    public void reloadParamsZveno(){
+    public void reloadParamsZveno() {
         arr.get(labController.getIdCurrentTab()).reloadParams(labController.getStart(), labController.getEnd(), labController.getVelocity(), labController.getSize().getX(), labController.getSize().getY());
+    }
+
+    public void reloadMoveModelZveno(int mode) {
+        for (Zveno z: arr) {
+            z.setMoveModel(mode);
+        }
+    }
+
+    public int getCurrenMoveModeId(){
+        return arr.get(labController.getIdCurrentTab()).getCurrentMoveModeId();
     }
 
 
     /**
-     *
      * @param period in ms
      */
-    private void startScheduledExecutorService(long period){
+    private void startScheduledExecutorService(long period) {
 
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(
-                new Runnable(){
+                new Runnable() {
                     @Override
                     public void run() {
-                        update();
-                        Platform.runLater(new Runnable(){
+                        update(period);
+                        Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
                                 draw();
@@ -158,5 +168,6 @@ public class Main extends Application {
                 period,
                 TimeUnit.MILLISECONDS);
     }
+
 
 }

@@ -17,10 +17,10 @@ public class MyCircle extends Zveno{
     private Point2D lineStart;
     private Point2D lineEnd;
     private double radius;
-    private float angle;
+    private double angle;
 
     public MyCircle(float x, float y, float startParam, float endParam, float velocity, double width, double height, GraphicsContext gc) {
-        super(x, y, startParam, endParam, velocity/ ( 1000 / Main.PERIOD_IN_MS), width, height, gc);
+        super(x, y, startParam, endParam, velocity, width, height, gc);
         this.radius = width / 2;
         this.lineStart = new Point2D(position.getX() + radius, position.getY() + radius);
         this.lineEnd = new Point2D(lineStart.getX(), lineStart.getY() - radius);
@@ -35,13 +35,12 @@ public class MyCircle extends Zveno{
     }
 
     @Override
-    public void move() {
-        super.move();
-        if (moveCount < 1) {
-            angle = moveRatio * velocity;
-            distance += angle;
-            this.lineEnd = getPointByAngle(angle, lineStart, lineEnd);
-        }
+    public void move(long period) {
+        super.move(period);
+        angle = this.moveModel.getVelocity();
+        distance += angle;
+        this.lineEnd = getPointByAngle(angle, lineStart, lineEnd);
+
     }
 
     private Point2D getPointByAngle(double a, Point2D center, Point2D end){
@@ -56,7 +55,7 @@ public class MyCircle extends Zveno{
 
     @Override
     public void reloadParams(float x, float y, float velocity, double width, double height) {
-        super.reloadParams(x, y, velocity/ ( 1000 / Main.PERIOD_IN_MS), width, height);
+        super.reloadParams(x, y, velocity, width, height);
         this.radius = width / 2;
         this.lineStart = new Point2D(position.getX() + radius, position.getY() + radius);
         this.lineEnd = getPointByAngle((float) param.getX(), lineStart, new Point2D(lineStart.getX(), lineStart.getY() - radius));
@@ -66,6 +65,7 @@ public class MyCircle extends Zveno{
     @Override
     public void reset() {
         this.lineEnd = getPointByAngle((float) param.getX(), lineStart, new Point2D(lineStart.getX(), lineStart.getY() - radius));
+        this.moveModel.reset();
     }
 
     @Override
